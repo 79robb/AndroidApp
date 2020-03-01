@@ -1,9 +1,11 @@
 package com.example.androidapp;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -14,7 +16,6 @@ import androidx.annotation.Nullable;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -36,6 +37,43 @@ public class WeatherActivity extends Activity {
 
         StrictMode.setThreadPolicy(policy);
 
+        Button homeNav = findViewById(R.id.homeButton);
+        homeNav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent mainActivity = new Intent(WeatherActivity.this, MainActivity.class);
+                startActivity(mainActivity);
+                Log.i("Switch Activity", "Opened Main Activity");
+            }
+        });
+
+        final TableLayout weatherTable = findViewById(R.id.weatherTable);
+
+        Button load12 = findViewById(R.id.load12);
+        load12.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int rowCount = weatherTable.getChildCount();
+                for(int i=1; i<rowCount; i++){
+                    weatherTable.removeViewAt(1);
+                }
+                createWeather(4);
+            }
+        });
+        Button load24 = findViewById(R.id.load24);
+        load24.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int rowCount = weatherTable.getChildCount();
+                for(int i=1; i<rowCount; i++){
+                    weatherTable.removeViewAt(1);
+                }
+                createWeather(8);
+            }
+        });
+    }
+
+    private void createWeather(int time){
         try {
             JSONObject weatherjson = readJsonFromUrl("https://api.openweathermap.org/data/2.5/forecast?id=2641108&appid=85ce4dba63ea014d404782678b49dc33");
             if(weatherjson.getInt("cod") == 200) {
@@ -46,14 +84,14 @@ public class WeatherActivity extends Activity {
 
                     String jsonString = weatherjson.getString("list");
                     JSONArray weatherData = new JSONArray(jsonString);
-                    for(int i=0; i<30; i++) {
+                    for(int i=0; i<time; i++) {
                         JSONObject weatherPrimary = weatherData.getJSONObject(i);
                         JSONObject weatherMain = weatherPrimary.getJSONObject("main");
                         JSONArray weatherSecondaryTemporary = weatherPrimary.getJSONArray("weather");
                         JSONObject weatherSecondary = weatherSecondaryTemporary.getJSONObject(0);
                         JSONObject weatherWind = weatherPrimary.getJSONObject("wind");
                         String weatherTime = weatherPrimary.getString("dt_txt");
-                        JSONObject weatherRain = new JSONObject();
+                        JSONObject weatherRain;
                         if(weatherSecondary.getString("main").equals("Rain"))
                         {
                             weatherRain = weatherPrimary.getJSONObject("rain");
