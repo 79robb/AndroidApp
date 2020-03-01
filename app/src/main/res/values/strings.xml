@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Sail Mull</string>
+    <string name="tobermory_info">Tobermory is the main town on the Isle of Mull. Tobermory has a large pontoon with facilities including showers and laundry. There are also a large number of visitor moorings.</string>
+    <string name="salen_info">Salen is a small village located halfway up the island on the east coast. With a Spar shop and the Salen hotel offering drinks, it proves an ideal anchorage.</string>
+    <string name="craignure_info">Craignure is where the ferry docks from Oban. It has a drying pier to the South which is within walking distance of the Craignure Inn.</string>
+    <string name="iona_info">Iona is home to Iona Abbey which was founded by St. Columba in the year 563.</string>
+    <string name="staffa_info">"Staffa is an Island on the west coast. Boats leave from Tobermory and Fionnphort regularly but require booking. Fingal's Cave is one of the main attractions."</string>
+    <string name="calgary_info">Calgary bay is easily accessible by boat and a 30 minute drive by car from Tobermory. The large white sandy beach makes for a fantastic picnic spot.</string>
+    <string-array name="mainLocations">
+        <item>Tobermory</item>
+        <item>Salen</item>
+        <item>Craignure</item>
+        <item>Iona</item>
+        <item>Staffa</item>
+        <item>Calgary Bay</item>
+    </string-array>
+</resources>
