@@ -70,15 +70,8 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/load12"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:text="12 Hours" />
 
             <Button
                 android:id="@+id/load24"
@@ -86,7 +79,20 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
                 android:text="24 Hours" />
+
+            <Button
+                android:id="@+id/load72"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:text="72 Hours" />
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/weatherInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TextView" />
 
     </LinearLayout>
 

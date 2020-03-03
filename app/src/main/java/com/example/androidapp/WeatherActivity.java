@@ -2,6 +2,7 @@ package com.example.androidapp;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
@@ -37,6 +38,10 @@ public class WeatherActivity extends Activity {
 
         StrictMode.setThreadPolicy(policy);
 
+        TextView weatherInfo = findViewById(R.id.weatherInfo);
+        weatherInfo.setTextColor(Color.WHITE);
+        weatherInfo.setText(R.string.weather_info);
+
         Button homeNav = findViewById(R.id.homeButton);
         homeNav.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,17 +54,6 @@ public class WeatherActivity extends Activity {
 
         final TableLayout weatherTable = findViewById(R.id.weatherTable);
 
-        Button load12 = findViewById(R.id.load12);
-        load12.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int rowCount = weatherTable.getChildCount();
-                for(int i=1; i<rowCount; i++){
-                    weatherTable.removeViewAt(1);
-                }
-                createWeather(4);
-            }
-        });
         Button load24 = findViewById(R.id.load24);
         load24.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,12 +62,24 @@ public class WeatherActivity extends Activity {
                 for(int i=1; i<rowCount; i++){
                     weatherTable.removeViewAt(1);
                 }
-                createWeather(8);
+                createWeather(8, 1);
+            }
+        });
+
+        Button load72 = findViewById(R.id.load72);
+        load72.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int rowCount = weatherTable.getChildCount();
+                for(int i=1; i<rowCount; i++){
+                    weatherTable.removeViewAt(1);
+                }
+                createWeather(24, 2);
             }
         });
     }
 
-    private void createWeather(int time){
+    private void createWeather(int time, int space){
         try {
             JSONObject weatherjson = readJsonFromUrl("https://api.openweathermap.org/data/2.5/forecast?id=2641108&appid=85ce4dba63ea014d404782678b49dc33");
             if(weatherjson.getInt("cod") == 200) {
@@ -84,7 +90,7 @@ public class WeatherActivity extends Activity {
 
                     String jsonString = weatherjson.getString("list");
                     JSONArray weatherData = new JSONArray(jsonString);
-                    for(int i=0; i<time; i++) {
+                    for(int i=0; i<time; i=i+space) {
                         JSONObject weatherPrimary = weatherData.getJSONObject(i);
                         JSONObject weatherMain = weatherPrimary.getJSONObject("main");
                         JSONArray weatherSecondaryTemporary = weatherPrimary.getJSONArray("weather");
@@ -123,6 +129,24 @@ public class WeatherActivity extends Activity {
                         String tempKelvin = weatherMain.getString("temp").substring(0, 3);
                         double tempTemp = Double.parseDouble(tempKelvin) - 273;
                         tempText.setText(Long.toString(Math.round(tempTemp)));
+
+                        TableRow.LayoutParams lp = new TableRow.LayoutParams(
+                                TableRow.LayoutParams.WRAP_CONTENT,
+                                TableRow.LayoutParams.MATCH_PARENT,
+                                0.2f
+                        );
+
+                        dateText.setLayoutParams(lp);
+                        windSpeedText.setLayoutParams(lp);
+                        windDirText.setLayoutParams(lp);
+                        precipitationText.setLayoutParams(lp);
+                        tempText.setLayoutParams(lp);
+
+                        dateText.setTextColor(Color.WHITE);
+                        windSpeedText.setTextColor(Color.WHITE);
+                        windDirText.setTextColor(Color.WHITE);
+                        precipitationText.setTextColor(Color.WHITE);
+                        tempText.setTextColor(Color.WHITE);
 
                         weatherRow.addView(dateText);
                         weatherRow.addView(windSpeedText);
