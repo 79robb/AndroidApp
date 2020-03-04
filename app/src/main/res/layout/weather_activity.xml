@@ -108,7 +108,7 @@
             android:id="@+id/weatherButton"
             style="JSC Server"
             android:layout_width="0dp"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:layout_weight="0.2"
             android:text="Weather"
             android:textSize="12sp" />
@@ -125,7 +125,7 @@
             android:id="@+id/homeButton"
             style="JSC Server"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:layout_weight="0.2"
             android:text="Home" />
 

@@ -52,6 +52,16 @@ public class WeatherActivity extends Activity {
             }
         });
 
+        Button bearingNav = findViewById(R.id.bearingButton);
+        bearingNav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent bearingActivity = new Intent(WeatherActivity.this, BearingActivity.class);
+                startActivity(bearingActivity);
+                Log.i("Switch Activity", "Opened Bearing Activity");
+            }
+        });
+
         final TableLayout weatherTable = findViewById(R.id.weatherTable);
 
         Button load24 = findViewById(R.id.load24);

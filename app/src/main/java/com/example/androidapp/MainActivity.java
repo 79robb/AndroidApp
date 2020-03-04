@@ -34,6 +34,16 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        Button bearingNav = findViewById(R.id.bearingButton);
+        bearingNav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent bearingActivity = new Intent(MainActivity.this, BearingActivity.class);
+                startActivity(bearingActivity);
+                Log.i("Switch Activity", "Opened Bearing Activity");
+            }
+        });
+
         final Spinner locationSpinner = findViewById(R.id.locationSpinnerID);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.mainLocations, android.R.layout.simple_spinner_item);
