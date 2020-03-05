@@ -40,6 +40,7 @@ public class BearingActivity extends Activity implements SensorEventListener {
     private double targetLatitude;
     private double targetLongitude;
     private String bearingLocation;
+    int bearing = 0;
 
     ImageView compassImg;
     ImageView bearingIndicator;
@@ -110,8 +111,8 @@ public class BearingActivity extends Activity implements SensorEventListener {
 
                         double x = Math.sin(targetLongitude - longitude) * Math.cos(targetLatitude);
                         double y = Math.cos(latitude) * Math.sin(targetLatitude) - Math.sin(latitude) * Math.cos(targetLatitude) * Math.cos(targetLongitude - longitude);
-                        int bearing = (int) (Math.toDegrees((Math.atan2(y, x))) + 360) % 360;
-                        Log.i("OUTPUT", Integer.toString(bearing));
+                        bearing = (int) (Math.toDegrees((Math.atan2(x, y))) + 360) % 360;
+                        bearingIndicator.setRotation(bearing - mAzimuth);
                     }
                 }
             }
@@ -132,7 +133,6 @@ public class BearingActivity extends Activity implements SensorEventListener {
                     latitude = location.getLatitude();
                     longitude = location.getLongitude();
 
-                    //CODE FROM HERE USED FOR BEARING INDICATOR
                     if(bearingIndicatorEnabled) {
                         if (bearingLocation.equals("Oban")) {
                             targetLatitude = 56.412;
@@ -141,8 +141,8 @@ public class BearingActivity extends Activity implements SensorEventListener {
 
                         double x = Math.sin(targetLongitude - longitude) * Math.cos(targetLatitude);
                         double y = Math.cos(latitude) * Math.sin(targetLatitude) - Math.sin(latitude) * Math.cos(targetLatitude) * Math.cos(targetLongitude - longitude);
-                        int bearing = (int) (Math.toDegrees((Math.atan2(y, x))) + 360) % 360;
-                        Log.i("OUTPUT", Integer.toString(bearing));
+                        bearing = (int) ((Math.toDegrees(Math.atan2(x, y))) + 360) % 360;
+                        bearingIndicator.setRotation(bearing - mAzimuth);
                     }
                 }
             }
@@ -221,7 +221,14 @@ public class BearingActivity extends Activity implements SensorEventListener {
 
         mAzimuth = Math.round(mAzimuth);
 
-        compassTxt.setText(mAzimuth + "°");
+        compassImg.setRotation(-mAzimuth);
+
+        //CODE FROM HERE USED FOR BEARING INDICATOR
+        if(bearingIndicatorEnabled) {
+            compassTxt.setText(mAzimuth + "°. Bearing to taget: " + bearing);
+        } else {
+            compassTxt.setText(mAzimuth + "°.");
+        }
     }
 
     @Override
