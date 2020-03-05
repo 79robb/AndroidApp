@@ -1,25 +1,48 @@
 package com.example.androidapp;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 public class BearingActivity extends Activity implements SensorEventListener {
 
+    private LocationManager locationManager;
+    private LocationListener locationListener;
+    private static final int ACCESS_REQUEST_LOCATION = 0;
+    private double latitude;
+    private double longitude;
+    private double targetLatitude;
+    private double targetLongitude;
+    private String bearingLocation;
+
     ImageView compassImg;
+    ImageView bearingIndicator;
     TextView compassTxt;
     int mAzimuth;
     private SensorManager mSensorManager;
@@ -32,11 +55,16 @@ public class BearingActivity extends Activity implements SensorEventListener {
     private boolean mLastAccelerometerSet = false;
     private boolean mLastMagnetometerSet = false;
 
+    boolean bearingIndicatorEnabled = false;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.bearing_activity);
 
+        bearingIndicator = findViewById(R.id.bearingIndicator);
+
+        //NAVIGATION BUTTONS
         Button homeNav = findViewById(R.id.homeButton);
         homeNav.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,11 +85,117 @@ public class BearingActivity extends Activity implements SensorEventListener {
             }
         });
 
+        //SET UP FOR SPINNER
+        final Spinner bearingSpinner = findViewById(R.id.bearingSpinner);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.bearingLocations, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        bearingSpinner.setAdapter(adapter);
+
+        bearingSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                bearingLocation = bearingSpinner.getSelectedItem().toString();
+                if(bearingLocation.equals("none")){
+                    bearingIndicatorEnabled = false;
+                    bearingIndicator.setVisibility(View.INVISIBLE);
+                } else {
+                    bearingIndicatorEnabled = true;
+                    bearingIndicator.setVisibility(View.VISIBLE);
+
+                    if(bearingIndicatorEnabled) {
+                        if (bearingLocation.equals("Oban")) {
+                            targetLatitude = 56.412;
+                            targetLongitude = -5.472;
+                        }
+
+                        double x = Math.sin(targetLongitude - longitude) * Math.cos(targetLatitude);
+                        double y = Math.cos(latitude) * Math.sin(targetLatitude) - Math.sin(latitude) * Math.cos(targetLatitude) * Math.cos(targetLongitude - longitude);
+                        int bearing = (int) (Math.toDegrees((Math.atan2(y, x))) + 360) % 360;
+                        Log.i("OUTPUT", Integer.toString(bearing));
+                    }
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                bearingIndicatorEnabled = false;
+            }
+        });
+
+        //ALL LOCATION SET UP
+        locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+        locationListener = new LocationListener() {
+            @Override
+            public void onLocationChanged(Location location) {
+                if(location != null) {
+                    //ASSIGN LATITUDE AND LONGITUDE
+                    latitude = location.getLatitude();
+                    longitude = location.getLongitude();
+
+                    //CODE FROM HERE USED FOR BEARING INDICATOR
+                    if(bearingIndicatorEnabled) {
+                        if (bearingLocation.equals("Oban")) {
+                            targetLatitude = 56.412;
+                            targetLongitude = -5.472;
+                        }
+
+                        double x = Math.sin(targetLongitude - longitude) * Math.cos(targetLatitude);
+                        double y = Math.cos(latitude) * Math.sin(targetLatitude) - Math.sin(latitude) * Math.cos(targetLatitude) * Math.cos(targetLongitude - longitude);
+                        int bearing = (int) (Math.toDegrees((Math.atan2(y, x))) + 360) % 360;
+                        Log.i("OUTPUT", Integer.toString(bearing));
+                    }
+                }
+            }
+
+            //NOT USED
+            @Override
+            public void onStatusChanged(String provider, int status, Bundle extras) {}
+            @Override
+            public void onProviderEnabled(String provider) {}
+            @Override
+            public void onProviderDisabled(String provider) {}
+        };
+
+        if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
+            Log.e("No location permission", "Requesting permission");
+            ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, ACCESS_REQUEST_LOCATION);
+        } else {
+            setLocationUpdateFunction();
+        }
+
+        //SET UP FOR COMPASS IMAGE AND BEARING TEXT
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         compassImg = findViewById(R.id.compass);
         compassTxt = findViewById(R.id.heading);
 
         start();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode){
+            case ACCESS_REQUEST_LOCATION: {
+                if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                    setLocationUpdateFunction();
+                } else {
+                    Log.e("No Location", "Location permission denied");
+                }
+                return;
+            }
+        }
+    }
+
+    // The minimum distance to change Updates in meters
+    private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 10; // 10 meters
+    // The minimum time between updates in milliseconds
+    private static final long MIN_TIME_BW_UPDATES = 1000; // 1 second
+    //    private static final long MIN_TIME_BW_UPDATES = 1000 * 60 * 1; // 1 minute
+
+
+    @SuppressLint("MissingPermission")
+    private void setLocationUpdateFunction(){
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, MIN_TIME_BW_UPDATES, MIN_DISTANCE_CHANGE_FOR_UPDATES, locationListener);
     }
 
     @Override
@@ -86,7 +220,6 @@ public class BearingActivity extends Activity implements SensorEventListener {
         }
 
         mAzimuth = Math.round(mAzimuth);
-        compassImg.setRotation(-mAzimuth);
 
         compassTxt.setText(mAzimuth + "°");
     }

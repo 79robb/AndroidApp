@@ -15,4 +15,8 @@
         <item>Staffa</item>
         <item>Calgary Bay</item>
     </string-array>
+    <string-array name="bearingLocations">
+        <item>none</item>
+        <item>Oban</item>
+    </string-array>
 </resources>
