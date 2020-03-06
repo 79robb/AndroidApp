@@ -19,4 +19,36 @@
         <item>none</item>
         <item>Oban</item>
     </string-array>
+
+    <string name="title_activity_weather">Weather</string>
+
+    <string name="title_activity_bearing">Bearing</string>
+
+    <string name="title_activity_settings">Settings</string>
+
+    <!-- Theme settings -->
+    <string name="theme_header">Theme</string>
+    <string name="darkmode_key">Dark Mode</string>
+    <string name="darkmode_title">Dark Mode</string>
+    <string name="darkmode_summary">Enable dark mode</string>
+
+    <!-- Units settings -->
+    <string name="units_header">Units</string>
+    <string name="temperature_key">Temperature units</string>
+    <string name="temperature_title">Temperature units</string>
+    <string name="temperature_summary">Click here to change</string>
+    <string-array name="temp_units">
+        <item>Celsius</item>
+        <item>Fahrenheit</item>
+        <item>Kelvin</item>
+    </string-array>
+
+    <string name="distance_key">Distance units</string>
+    <string name="distance_title">Distance units</string>
+    <string name="distance_summary">Click here to change</string>
+    <string-array name="distance_units">
+        <item>Nautical miles</item>
+        <item>Metric</item>
+        <item>Imperial</item>
+    </string-array>
 </resources>

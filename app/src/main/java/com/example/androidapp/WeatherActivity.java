@@ -62,6 +62,16 @@ public class WeatherActivity extends Activity {
             }
         });
 
+        Button settingsNav = findViewById(R.id.settingsButton);
+        settingsNav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent settingActivity = new Intent(WeatherActivity.this, SettingsActivity.class);
+                startActivity(settingActivity);
+                Log.i("Switch Activity", "Opened Settings Activity");
+            }
+        });
+
         final TableLayout weatherTable = findViewById(R.id.weatherTable);
 
         Button load24 = findViewById(R.id.load24);

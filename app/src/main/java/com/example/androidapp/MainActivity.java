@@ -44,6 +44,16 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        Button settingsNav = findViewById(R.id.settingsButton);
+        settingsNav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent settingActivity = new Intent(MainActivity.this, SettingsActivity.class);
+                startActivity(settingActivity);
+                Log.i("Switch Activity", "Opened Settings Activity");
+            }
+        });
+
         final Spinner locationSpinner = findViewById(R.id.locationSpinnerID);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.mainLocations, android.R.layout.simple_spinner_item);

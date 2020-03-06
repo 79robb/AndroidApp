@@ -86,6 +86,16 @@ public class BearingActivity extends Activity implements SensorEventListener {
             }
         });
 
+        Button settingsNav = findViewById(R.id.settingsButton);
+        settingsNav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent settingActivity = new Intent(BearingActivity.this, SettingsActivity.class);
+                startActivity(settingActivity);
+                Log.i("Switch Activity", "Opened Settings Activity");
+            }
+        });
+
         //SET UP FOR SPINNER
         final Spinner bearingSpinner = findViewById(R.id.bearingSpinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.bearingLocations, android.R.layout.simple_spinner_item);

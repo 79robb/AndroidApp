@@ -1,0 +1,28 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory app:title="@string/theme_header">
+        <SwitchPreference
+            app:key="@string/darkmode_key"
+            app:title="@string/darkmode_title"
+            app:summary="@string/darkmode_summary"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/units_header">
+        <ListPreference
+            app:title="@string/temperature_title"
+            app:key="@string/temperature_key"
+            app:defaultValue="Celsius"
+            app:summary="@string/temperature_summary"
+            app:entries="@array/temp_units"
+            app:entryValues="@array/temp_units"/>
+        <ListPreference
+            app:title="@string/distance_title"
+            app:key="@string/distance_key"
+            app:defaultValue="Nautical miles"
+            app:summary="@string/distance_summary"
+            app:entries="@array/distance_units"
+            app:entryValues="@array/distance_units"/>
+    </PreferenceCategory>
+
+</PreferenceScreen>
