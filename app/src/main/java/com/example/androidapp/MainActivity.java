@@ -54,6 +54,16 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        Button mapNav = findViewById(R.id.mapButton);
+        mapNav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent mapActivity = new Intent(MainActivity.this, MapActivity.class);
+                startActivity(mapActivity);
+                Log.i("Switch Activity", "Opened Settings Activity");
+            }
+        });
+
         final Spinner locationSpinner = findViewById(R.id.locationSpinnerID);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.mainLocations, android.R.layout.simple_spinner_item);

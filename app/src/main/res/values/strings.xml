@@ -6,7 +6,7 @@
     <string name="iona_info">Iona is home to Iona Abbey which was founded by St. Columba in the year 563.</string>
     <string name="staffa_info">"Staffa is an Island on the west coast. Boats leave from Tobermory and Fionnphort regularly but require booking. Fingal's Cave is one of the main attractions."</string>
     <string name="calgary_info">Calgary bay is easily accessible by boat and a 30 minute drive by car from Tobermory. The large white sandy beach makes for a fantastic picnic spot.</string>
-    <string name="weather_info">Weather data is gathered from openweathermap.org. Weather station is in Oban. Press 24 hours for a detailed 24 hour forecast. Press 72 hours for a less detailed 72 hour forecast.</string>
+    <string name="weather_info">Weather data is gathered from openweathermap.org. Weather station is in Oban. Press 24 hours for a detailed 24 hour forecast. Press 72 hours for a less detailed 72 hour forecast. Scroll along to see all the data.</string>
     <string-array name="mainLocations">
         <item>Tobermory</item>
         <item>Salen</item>
@@ -20,11 +20,20 @@
         <item>Oban</item>
     </string-array>
 
+    <!-- names for the nav buttons -->
+    <string name="weather_button">Weather</string>
+    <string name="bearing_button">Bearing</string>
+    <string name="home_button">Home</string>
+    <string name="chart_button">Chart</string>
+    <string name="settings_button">Settings</string>
+
     <string name="title_activity_weather">Weather</string>
 
     <string name="title_activity_bearing">Bearing</string>
 
     <string name="title_activity_settings">Settings</string>
+
+    <string name="title_activity_map">Map</string>
 
     <!-- Theme settings -->
     <string name="theme_header">Theme</string>
@@ -36,7 +45,6 @@
     <string name="units_header">Units</string>
     <string name="temperature_key">Temperature units</string>
     <string name="temperature_title">Temperature units</string>
-    <string name="temperature_summary">Click here to change</string>
     <string-array name="temp_units">
         <item>Celsius</item>
         <item>Fahrenheit</item>
@@ -45,7 +53,6 @@
 
     <string name="distance_key">Distance units</string>
     <string name="distance_title">Distance units</string>
-    <string name="distance_summary">Click here to change</string>
     <string-array name="distance_units">
         <item>Nautical miles</item>
         <item>Metric</item>

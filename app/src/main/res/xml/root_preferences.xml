@@ -13,14 +13,14 @@
             app:title="@string/temperature_title"
             app:key="@string/temperature_key"
             app:defaultValue="Celsius"
-            app:summary="@string/temperature_summary"
+            app:summary="%s"
             app:entries="@array/temp_units"
             app:entryValues="@array/temp_units"/>
         <ListPreference
             app:title="@string/distance_title"
             app:key="@string/distance_key"
             app:defaultValue="Nautical miles"
-            app:summary="@string/distance_summary"
+            app:summary="%s"
             app:entries="@array/distance_units"
             app:entryValues="@array/distance_units"/>
     </PreferenceCategory>

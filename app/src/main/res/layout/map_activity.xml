@@ -4,50 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#1B1B1B">
+    android:background="#1b1b1b">
 
-    <LinearLayout
+    <WebView
+        android:id="@+id/chartView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <ImageView
-                android:id="@+id/compass"
-                android:layout_width="match_parent"
-                android:layout_height="508dp"
-                android:src="@drawable/mullcompass"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ImageView
-                android:id="@+id/bearingIndicator"
-                android:layout_width="match_parent"
-                android:layout_height="508dp"
-                android:src="@drawable/pointer"
-                android:visibility="invisible"
-                app:layout_constraintStart_toStartOf="@+id/compass"
-                app:layout_constraintTop_toTopOf="@+id/compass" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <TextView
-            android:id="@+id/heading"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textColor="@android:color/white"
-            android:textSize="20sp" />
-
-        <Spinner
-            android:id="@+id/bearingSpinner"
-            android:layout_width="409dp"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -70,7 +35,7 @@
             android:id="@+id/bearingButton"
             style="JSC Server"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:layout_weight="0.2"
             android:text="@string/bearing_button" />
 
@@ -86,7 +51,7 @@
             android:id="@+id/mapButton"
             style="JSC Server"
             android:layout_width="0dp"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:layout_weight="0.2"
             android:text="@string/chart_button" />
 

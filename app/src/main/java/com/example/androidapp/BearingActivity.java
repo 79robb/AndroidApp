@@ -96,6 +96,16 @@ public class BearingActivity extends Activity implements SensorEventListener {
             }
         });
 
+        Button mapNav = findViewById(R.id.mapButton);
+        mapNav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent mapActivity = new Intent(BearingActivity.this, MapActivity.class);
+                startActivity(mapActivity);
+                Log.i("Switch Activity", "Opened Settings Activity");
+            }
+        });
+
         //SET UP FOR SPINNER
         final Spinner bearingSpinner = findViewById(R.id.bearingSpinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.bearingLocations, android.R.layout.simple_spinner_item);
@@ -235,9 +245,9 @@ public class BearingActivity extends Activity implements SensorEventListener {
 
         //CODE FROM HERE USED FOR BEARING INDICATOR
         if(bearingIndicatorEnabled) {
-            compassTxt.setText(mAzimuth + "°. Bearing to taget: " + bearing);
+            compassTxt.setText(mAzimuth + "° Bearing to target: " + bearing + "°");
         } else {
-            compassTxt.setText(mAzimuth + "°.");
+            compassTxt.setText(mAzimuth + "°");
         }
     }
 

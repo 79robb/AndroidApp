@@ -1,7 +1,9 @@
 package com.example.androidapp;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -13,6 +15,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.preference.PreferenceManager;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -68,6 +71,16 @@ public class WeatherActivity extends Activity {
             public void onClick(View v) {
                 Intent settingActivity = new Intent(WeatherActivity.this, SettingsActivity.class);
                 startActivity(settingActivity);
+                Log.i("Switch Activity", "Opened Settings Activity");
+            }
+        });
+
+        Button mapNav = findViewById(R.id.mapButton);
+        mapNav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent mapActivity = new Intent(WeatherActivity.this, MapActivity.class);
+                startActivity(mapActivity);
                 Log.i("Switch Activity", "Opened Settings Activity");
             }
         });
@@ -137,30 +150,51 @@ public class WeatherActivity extends Activity {
                         TextView precipitationText = new TextView(getApplicationContext());
                         TextView tempText = new TextView(getApplicationContext());
 
+                        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+                        String tempUnit = preferences.getString("Temperature units", "Celsius");
+                        String distanceUnit = preferences.getString("Distance units", "Nautical miles");
+
                         dateText.setText(weatherTime);
+
                         double windSpeed = Double.parseDouble(weatherWind.getString("speed"));
-                        windSpeedText.setText(df.format(windSpeed*1.944));
-                        windDirText.setText(weatherWind.getString("deg"));
+
+                        //Set wind speed depending on preference
+                        if(distanceUnit.equals("Nautical miles")){
+                            windSpeedText.setText(df.format(windSpeed*1.944) + "kn");
+                        } else if(distanceUnit.equals("Metric")){
+                            windSpeedText.setText(df.format(windSpeed*1) + "m/s");
+                        } else {
+                            windSpeedText.setText(df.format(windSpeed*2.237) + "mph");
+                        }
+
+                        //Set wind direction
+                        windDirText.setText(weatherWind.getString("deg") + "°");
+
+                        //Set precipitation depending on preference
                         if(weatherRain != null) {
                             precipitationText.setText(weatherSecondary.getString("description") + ", " + weatherRain.getString("3h") + "mm");
                         } else {
                             precipitationText.setText("None");
                         }
+
+                        //Set temperature depending on preference
                         String tempKelvin = weatherMain.getString("temp").substring(0, 3);
-                        double tempTemp = Double.parseDouble(tempKelvin) - 273;
-                        tempText.setText(Long.toString(Math.round(tempTemp)));
+                        if(tempUnit.equals("Celsius")) {
+                            double temp = Double.parseDouble(tempKelvin) - 273;
+                            tempText.setText(Math.round(temp) + "°C");
+                        } else if(tempUnit.equals("Fahrenheit")){
+                            double temp = (Double.parseDouble(tempKelvin) - 273) *(9/5) + 32;
+                            tempText.setText(Math.round(temp) + "°F");
+                        } else{
+                            tempText.setText(tempKelvin + "K");
+                        }
 
                         TableRow.LayoutParams lp = new TableRow.LayoutParams(
-                                TableRow.LayoutParams.WRAP_CONTENT,
-                                TableRow.LayoutParams.MATCH_PARENT,
-                                0.2f
+                                100,
+                                TableRow.LayoutParams.WRAP_CONTENT
                         );
 
                         dateText.setLayoutParams(lp);
-                        windSpeedText.setLayoutParams(lp);
-                        windDirText.setLayoutParams(lp);
-                        precipitationText.setLayoutParams(lp);
-                        tempText.setLayoutParams(lp);
 
                         dateText.setTextColor(Color.WHITE);
                         windSpeedText.setTextColor(Color.WHITE);
