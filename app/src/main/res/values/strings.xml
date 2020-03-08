@@ -7,6 +7,7 @@
     <string name="staffa_info">"Staffa is an Island on the west coast. Boats leave from Tobermory and Fionnphort regularly but require booking. Fingal's Cave is one of the main attractions."</string>
     <string name="calgary_info">Calgary bay is easily accessible by boat and a 30 minute drive by car from Tobermory. The large white sandy beach makes for a fantastic picnic spot.</string>
     <string name="weather_info">Weather data is gathered from openweathermap.org. Weather station is in Oban. Press 24 hours for a detailed 24 hour forecast. Press 72 hours for a less detailed 72 hour forecast. Scroll along to see all the data.</string>
+    <string name="custom_instructions">Enter some co-ordinates below to see the bearing to them from your current location.</string>
     <string-array name="mainLocations">
         <item>Tobermory</item>
         <item>Salen</item>
@@ -18,6 +19,10 @@
     <string-array name="bearingLocations">
         <item>none</item>
         <item>Oban</item>
+        <item>Tobermory</item>
+        <item>Iona</item>
+        <item>Staffa</item>
+        <item>Custom</item>
     </string-array>
 
     <!-- names for the nav buttons -->

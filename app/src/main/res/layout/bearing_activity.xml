@@ -6,48 +6,104 @@
     android:layout_height="match_parent"
     android:background="#1B1B1B">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <ImageView
-                android:id="@+id/compass"
-                android:layout_width="match_parent"
-                android:layout_height="508dp"
-                android:src="@drawable/mullcompass"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ImageView
-                android:id="@+id/bearingIndicator"
-                android:layout_width="match_parent"
-                android:layout_height="508dp"
-                android:src="@drawable/pointer"
-                android:visibility="invisible"
-                app:layout_constraintStart_toStartOf="@+id/compass"
-                app:layout_constraintTop_toTopOf="@+id/compass" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <TextView
-            android:id="@+id/heading"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textColor="@android:color/white"
-            android:textSize="20sp" />
+            android:orientation="vertical">
 
-        <Spinner
-            android:id="@+id/bearingSpinner"
-            android:layout_width="409dp"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/compass"
+                    android:layout_width="match_parent"
+                    android:layout_height="508dp"
+                    android:src="@drawable/mullcompass"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/bearingIndicator"
+                    android:layout_width="match_parent"
+                    android:layout_height="508dp"
+                    android:src="@drawable/pointer"
+                    android:visibility="invisible"
+                    app:layout_constraintStart_toStartOf="@+id/compass"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/heading"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textColor="@android:color/white"
+                android:textSize="20sp" />
+
+            <Spinner
+                android:id="@+id/bearingSpinner"
+                android:layout_width="409dp"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white" />
+
+            <TextView
+                android:id="@+id/customInstructions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/custom_instructions"
+                android:textColor="@android:color/white"
+                android:visibility="invisible" />
+
+            <LinearLayout
+                android:id="@+id/latlongEdits"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:visibility="invisible">
+
+                <EditText
+                    android:id="@+id/customLatitude"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:ems="10"
+                    android:hint="Latitude:"
+                    android:inputType="number"
+                    android:textColor="@android:color/white"
+                    android:textColorHint="@android:color/white" />
+
+                <EditText
+                    android:id="@+id/customLongitude"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:ems="10"
+                    android:hint="Longitude:"
+                    android:inputType="number"
+                    android:textColor="@android:color/white"
+                    android:textColorHint="@android:color/white" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/customGoButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Go!"
+                android:visibility="invisible" />
+
+        </LinearLayout>
+    </ScrollView>
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -98,6 +154,7 @@
             android:layout_weight="0.2"
             android:text="@string/settings_button"
             android:textSize="12sp" />
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

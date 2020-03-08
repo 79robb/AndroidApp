@@ -21,7 +21,9 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -111,6 +113,11 @@ public class BearingActivity extends Activity implements SensorEventListener {
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.bearingLocations, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         bearingSpinner.setAdapter(adapter);
+        final EditText customLatitude = findViewById(R.id.customLatitude);
+        final EditText customLongitude = findViewById(R.id.customLongitude);
+        final Button customGo = findViewById(R.id.customGoButton);
+        final TextView customInstructions = findViewById(R.id.customInstructions);
+        final LinearLayout latLongEdits = findViewById(R.id.latlongEdits);
 
         bearingSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -123,12 +130,48 @@ public class BearingActivity extends Activity implements SensorEventListener {
                     bearingIndicatorEnabled = true;
                     bearingIndicator.setVisibility(View.VISIBLE);
 
+                    if(bearingLocation.equals("Custom")){
+                        customInstructions.setText(R.string.custom_instructions);
+                        customInstructions.setVisibility(View.VISIBLE);
+                        latLongEdits.setVisibility(View.VISIBLE);
+                        customGo.setVisibility(View.VISIBLE);
+                    } else {
+                        customInstructions.setVisibility(View.INVISIBLE);
+                        latLongEdits.setVisibility(View.INVISIBLE);
+                        customGo.setVisibility(View.INVISIBLE);
+                    }
+
                     if(bearingIndicatorEnabled) {
                         if (bearingLocation.equals("Oban")) {
                             targetLatitude = 56.412;
                             targetLongitude = -5.472;
-                        }
+                        } else if (bearingLocation.equals("Tobermory")){
+                            targetLatitude = 56.62;
+                            targetLongitude = -6.07;
+                        } else if(bearingLocation.equals("Iona")){
+                            targetLatitude = 56.33;
+                            targetLongitude = -6.42;
+                        } else if(bearingLocation.equals("Staffa")){
+                            targetLatitude = 56.43;
+                            targetLongitude = -6.33;
+                        } else if(bearingLocation.equals("Custom")) {
+                            customGo.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    double editLatitude = Double.parseDouble(customLatitude.getText().toString());
+                                    double editLongitude = Double.parseDouble(customLongitude.getText().toString());
 
+                                    if (editLatitude > 60 || editLatitude < 40) {
+                                        customInstructions.setText("Please select a latitude closer to Mull.");
+                                    } else if (editLongitude > 7 || editLongitude < 5) {
+                                        customInstructions.setText("Please select a longitude closer to Mull.");
+                                    } else {
+                                        targetLatitude = editLatitude;
+                                        targetLongitude = editLongitude;
+                                    }
+                                }
+                            });
+                        }
                         double x = Math.sin(targetLongitude - longitude) * Math.cos(targetLatitude);
                         double y = Math.cos(latitude) * Math.sin(targetLatitude) - Math.sin(latitude) * Math.cos(targetLatitude) * Math.cos(targetLongitude - longitude);
                         bearing = (int) (Math.toDegrees((Math.atan2(x, y))) + 360) % 360;
@@ -156,6 +199,32 @@ public class BearingActivity extends Activity implements SensorEventListener {
                         if (bearingLocation.equals("Oban")) {
                             targetLatitude = 56.412;
                             targetLongitude = -5.472;
+                        } else if (bearingLocation.equals("Tobermory")){
+                            targetLatitude = 56.62;
+                            targetLongitude = -6.07;
+                        } else if(bearingLocation.equals("Iona")){
+                            targetLatitude = 56.33;
+                            targetLongitude = -6.42;
+                        } else if(bearingLocation.equals("Staffa")){
+                            targetLatitude = 56.43;
+                            targetLongitude = -6.33;
+                        } else if(bearingLocation.equals("Custom")){
+                            customGo.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    double editLatitude = Double.parseDouble(customLatitude.getText().toString());
+                                    double editLongitude = Double.parseDouble(customLongitude.getText().toString());
+
+                                    if(editLatitude > 60 || editLatitude < 40){
+                                        customInstructions.setText("Please select a latitude closer to Mull.");
+                                    } else if(editLongitude > 7 || editLongitude < 5){
+                                        customInstructions.setText("Please select a longitude closer to Mull.");
+                                    } else {
+                                        targetLatitude = editLatitude;
+                                        targetLongitude = editLongitude;
+                                    }
+                                }
+                            });
                         }
 
                         double x = Math.sin(targetLongitude - longitude) * Math.cos(targetLatitude);

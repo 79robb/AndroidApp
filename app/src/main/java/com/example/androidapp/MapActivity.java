@@ -57,5 +57,7 @@ public class MapActivity extends Activity {
         });
 
         WebView chartView = findViewById(R.id.chartView);
+        chartView.getSettings().setJavaScriptEnabled(true);
+        chartView.loadUrl("https://webapp.navionics.com/#boating@7&key=_ulwIf%60nd%40");
     }
 }
