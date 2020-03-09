@@ -56,52 +56,6 @@
                 android:layout_height="wrap_content"
                 android:background="@android:color/white" />
 
-            <TextView
-                android:id="@+id/customInstructions"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="@string/custom_instructions"
-                android:textColor="@android:color/white"
-                android:visibility="invisible" />
-
-            <LinearLayout
-                android:id="@+id/latlongEdits"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:visibility="invisible">
-
-                <EditText
-                    android:id="@+id/customLatitude"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.5"
-                    android:ems="10"
-                    android:hint="Latitude:"
-                    android:inputType="number"
-                    android:textColor="@android:color/white"
-                    android:textColorHint="@android:color/white" />
-
-                <EditText
-                    android:id="@+id/customLongitude"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.5"
-                    android:ems="10"
-                    android:hint="Longitude:"
-                    android:inputType="number"
-                    android:textColor="@android:color/white"
-                    android:textColorHint="@android:color/white" />
-            </LinearLayout>
-
-            <Button
-                android:id="@+id/customGoButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Go!"
-                android:visibility="invisible" />
-
         </LinearLayout>
     </ScrollView>
 
