@@ -43,10 +43,13 @@ public class BearingActivity extends Activity implements SensorEventListener {
     private double targetLongitude;
     private String bearingLocation;
     int bearing = 0;
+    double distance;
 
     ImageView compassImg;
     ImageView bearingIndicator;
     TextView compassTxt;
+    TextView bearingMarkText;
+    TextView distanceMarkText;
     int mAzimuth;
     private SensorManager mSensorManager;
     private Sensor mRotationV, mAccelerometer, mMagnetometer;
@@ -66,6 +69,8 @@ public class BearingActivity extends Activity implements SensorEventListener {
         setContentView(R.layout.bearing_activity);
 
         bearingIndicator = findViewById(R.id.bearingIndicator);
+        bearingMarkText = findViewById(R.id.bearingMarker);
+        distanceMarkText = findViewById(R.id.distanceMarker);
 
         //NAVIGATION BUTTONS
         Button homeNav = findViewById(R.id.homeButton);
@@ -121,9 +126,13 @@ public class BearingActivity extends Activity implements SensorEventListener {
                 if(bearingLocation.equals("none")){
                     bearingIndicatorEnabled = false;
                     bearingIndicator.setVisibility(View.INVISIBLE);
+                    bearingMarkText.setVisibility(View.INVISIBLE);
+                    distanceMarkText.setVisibility(View.INVISIBLE);
                 } else {
                     bearingIndicatorEnabled = true;
                     bearingIndicator.setVisibility(View.VISIBLE);
+                    bearingMarkText.setVisibility(View.VISIBLE);
+                    distanceMarkText.setVisibility(View.VISIBLE);
 
                     if(bearingIndicatorEnabled) {
                         if (bearingLocation.equals("Oban")) {
@@ -140,6 +149,7 @@ public class BearingActivity extends Activity implements SensorEventListener {
                             targetLongitude = -6.33;
                         }
                         bearing = getBearing(latitude, longitude, targetLatitude, targetLongitude);
+                        distance = Math.round(getDistance(latitude, longitude, targetLatitude, targetLongitude));
                     }
                 }
             }
@@ -175,6 +185,7 @@ public class BearingActivity extends Activity implements SensorEventListener {
                             targetLongitude = -6.33;
                         }
                         bearing = getBearing(latitude, longitude, targetLatitude, targetLongitude);
+                        distance = Math.round(getDistance(latitude, longitude, targetLatitude, targetLongitude));
                         bearingIndicator.setRotation(bearing - mAzimuth);
                     }
                 }
@@ -208,6 +219,10 @@ public class BearingActivity extends Activity implements SensorEventListener {
         double x = Math.sin(longy - longx) * Math.cos(laty);
         double y = Math.cos(latx) * Math.sin(laty) - Math.sin(latx) * Math.cos(laty) * Math.cos(longy - longx);
         return (int) ((Math.toDegrees(Math.atan2(x, y))) + 360) % 360;
+    }
+
+    public double getDistance(double latx, double longx, double laty, double longy){
+        return Math.acos(Math.sin(Math.toRadians(latx))*Math.sin(Math.toRadians(laty)) + Math.cos(Math.toRadians(latx))*Math.cos(Math.toRadians(laty))*Math.cos(Math.toRadians(longy)-Math.toRadians(longx))) * 6371e3;
     }
 
     @Override
@@ -265,7 +280,9 @@ public class BearingActivity extends Activity implements SensorEventListener {
 
         //CODE FROM HERE USED FOR BEARING INDICATOR
         if(bearingIndicatorEnabled) {
-            compassTxt.setText(mAzimuth + "° Bearing to target: " + bearing + "°");
+            compassTxt.setText(mAzimuth + "°");
+            bearingMarkText.setText("Bearing to target: " + bearing + "°");
+            distanceMarkText.setText("Distance to target: "  + distance/1000 + "km");
         } else {
             compassTxt.setText(mAzimuth + "°");
         }

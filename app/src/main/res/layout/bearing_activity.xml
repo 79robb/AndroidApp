@@ -26,7 +26,7 @@
                 <ImageView
                     android:id="@+id/compass"
                     android:layout_width="match_parent"
-                    android:layout_height="508dp"
+                    android:layout_height="450dp"
                     android:src="@drawable/mullcompass"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -34,7 +34,7 @@
                 <ImageView
                     android:id="@+id/bearingIndicator"
                     android:layout_width="match_parent"
-                    android:layout_height="508dp"
+                    android:layout_height="450dp"
                     android:src="@drawable/pointer"
                     android:visibility="invisible"
                     app:layout_constraintStart_toStartOf="@+id/compass"
@@ -47,6 +47,23 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
+                android:textColor="@android:color/white"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/bearingMarker"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textColor="@android:color/white"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/distanceMarker"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textAllCaps="false"
                 android:textColor="@android:color/white"
                 android:textSize="20sp" />
 
