@@ -7,6 +7,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -31,6 +32,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.preference.PreferenceManager;
+
+import java.text.DecimalFormat;
 
 public class BearingActivity extends Activity implements SensorEventListener {
 
@@ -44,6 +48,8 @@ public class BearingActivity extends Activity implements SensorEventListener {
     private String bearingLocation;
     int bearing = 0;
     double distance;
+
+    private static DecimalFormat df2 = new DecimalFormat("#.##");
 
     ImageView compassImg;
     ImageView bearingIndicator;
@@ -126,8 +132,8 @@ public class BearingActivity extends Activity implements SensorEventListener {
                 if(bearingLocation.equals("none")){
                     bearingIndicatorEnabled = false;
                     bearingIndicator.setVisibility(View.INVISIBLE);
-                    bearingMarkText.setVisibility(View.INVISIBLE);
-                    distanceMarkText.setVisibility(View.INVISIBLE);
+                    bearingMarkText.setVisibility(View.GONE);
+                    distanceMarkText.setVisibility(View.GONE);
                 } else {
                     bearingIndicatorEnabled = true;
                     bearingIndicator.setVisibility(View.VISIBLE);
@@ -278,11 +284,20 @@ public class BearingActivity extends Activity implements SensorEventListener {
         compassImg.setRotation(-mAzimuth);
         bearingIndicator.setRotation(bearing - mAzimuth);
 
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String distanceUnit = preferences.getString("Distance units", "Nautical miles");
+
         //CODE FROM HERE USED FOR BEARING INDICATOR
         if(bearingIndicatorEnabled) {
             compassTxt.setText(mAzimuth + "°");
             bearingMarkText.setText("Bearing to target: " + bearing + "°");
-            distanceMarkText.setText("Distance to target: "  + distance/1000 + "km");
+            if(distanceUnit.equals("Nautical miles")){
+                distanceMarkText.setText("Distance to target: "  + df2.format((distance/1000)/1.852) + "nm");
+            } else if(distanceUnit.equals("Imperial")){
+                distanceMarkText.setText("Distance to target: "  + df2.format((distance/1000)/1.609) + "mi");
+            } else {
+                distanceMarkText.setText("Distance to target: "  + df2.format(distance/1000) + "km");
+            }
         } else {
             compassTxt.setText(mAzimuth + "°");
         }
