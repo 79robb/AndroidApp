@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Button bearingNav = findViewById(R.id.bearingButton);
+        final Button bearingNav = findViewById(R.id.bearingButton);
         bearingNav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -78,31 +78,34 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String locationChooser = locationSpinner.getSelectedItem().toString();
-                if(locationChooser.equals("Tobermory")){
-                    locationInfo.setText(R.string.tobermory_info);
-                    mullImage.setImageResource(R.drawable.mulltob);
-                    Log.i("Change location", locationChooser + " selected");
-                } else if(locationChooser.equals("Salen")){
-                    locationInfo.setText(R.string.salen_info);
-                    mullImage.setImageResource(R.drawable.mullsalen);
-                    Log.i("Change location", locationChooser + " selected");
-                }  else if(locationChooser.equals("Craignure")){
-                    locationInfo.setText(R.string.craignure_info);
-                    mullImage.setImageResource(R.drawable.mullcraignure);
-                    Log.i("Change location", locationChooser + " selected");
-                }  else if(locationChooser.equals("Iona")){
-                    locationInfo.setText(R.string.iona_info);
-                    mullImage.setImageResource(R.drawable.mulliona);
-                    Log.i("Change location", locationChooser + " selected");
-                }  else if(locationChooser.equals("Staffa")){
-                    locationInfo.setText(R.string.staffa_info);
-                    mullImage.setImageResource(R.drawable.mullstaffa);
-                    Log.i("Change location", locationChooser + " selected");
-                }  else if(locationChooser.equals("Calgary Bay")){
-                    locationInfo.setText(R.string.calgary_info);
-                    mullImage.setImageResource(R.drawable.mullcalgary);
-                    Log.i("Change location", locationChooser + " selected");
+
+                switch (locationChooser){
+                    case "Tobermory":
+                        locationInfo.setText(R.string.tobermory_info);
+                        mullImage.setImageResource(R.drawable.mulltob);
+                        break;
+                    case "Salen":
+                        locationInfo.setText(R.string.salen_info);
+                        mullImage.setImageResource(R.drawable.mullsalen);
+                        break;
+                    case "Craignure":
+                        locationInfo.setText(R.string.craignure_info);
+                        mullImage.setImageResource(R.drawable.mullcraignure);
+                        break;
+                    case "Iona":
+                        locationInfo.setText(R.string.iona_info);
+                        mullImage.setImageResource(R.drawable.mulliona);
+                        break;
+                    case "Staffa":
+                        locationInfo.setText(R.string.staffa_info);
+                        mullImage.setImageResource(R.drawable.mullstaffa);
+                        break;
+                    case "Calgary Bay":
+                        locationInfo.setText(R.string.calgary_info);
+                        mullImage.setImageResource(R.drawable.mullcalgary);
+                        break;
                 }
+                Log.i("Change location", locationChooser + " selected");
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
