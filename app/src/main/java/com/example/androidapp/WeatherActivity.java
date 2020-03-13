@@ -32,9 +32,17 @@ import java.text.DecimalFormat;
 
 public class WeatherActivity extends Activity {
 
+    SharedPreferences themePreferences;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        themePreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        if(themePreferences.getBoolean("Dark Mode", false)) {
+            setTheme(R.style.DarkTheme);
+        } else {
+            setTheme(R.style.AppTheme);
+        }
         setContentView(R.layout.weather_activity);
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -196,12 +204,19 @@ public class WeatherActivity extends Activity {
 
                         dateText.setLayoutParams(lp);
 
-                        dateText.setTextColor(Color.WHITE);
-                        windSpeedText.setTextColor(Color.WHITE);
-                        windDirText.setTextColor(Color.WHITE);
-                        precipitationText.setTextColor(Color.WHITE);
-                        tempText.setTextColor(Color.WHITE);
-
+                        if(themePreferences.getBoolean("Dark Mode", false)){
+                            dateText.setTextColor(Color.WHITE);
+                            windSpeedText.setTextColor(Color.WHITE);
+                            windDirText.setTextColor(Color.WHITE);
+                            precipitationText.setTextColor(Color.WHITE);
+                            tempText.setTextColor(Color.WHITE);
+                        } else {
+                            dateText.setTextColor(getResources().getColor(R.color.colorText));
+                            windSpeedText.setTextColor(getResources().getColor(R.color.colorText));
+                            windDirText.setTextColor(getResources().getColor(R.color.colorText));
+                            precipitationText.setTextColor(getResources().getColor(R.color.colorText));
+                            tempText.setTextColor(getResources().getColor(R.color.colorText));
+                        }
                         weatherRow.addView(dateText);
                         weatherRow.addView(windSpeedText);
                         weatherRow.addView(windDirText);

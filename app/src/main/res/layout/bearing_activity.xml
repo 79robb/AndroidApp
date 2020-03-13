@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#1B1B1B">
+    android:background="?attr/colorPrimary">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -43,11 +43,19 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
+                android:id="@+id/locationTxt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textColor="?attr/colorPrimaryDark"
+                android:textSize="20sp" />
+
+            <TextView
                 android:id="@+id/heading"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:textColor="@android:color/white"
+                android:textColor="?attr/colorPrimaryDark"
                 android:textSize="20sp" />
 
             <TextView
@@ -55,7 +63,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:textColor="@android:color/white"
+                android:textColor="?attr/colorPrimaryDark"
                 android:textSize="20sp" />
 
             <TextView
@@ -64,14 +72,15 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:textAllCaps="false"
-                android:textColor="@android:color/white"
+                android:textColor="?attr/colorPrimaryDark"
                 android:textSize="20sp" />
 
             <Spinner
                 android:id="@+id/bearingSpinner"
                 android:layout_width="409dp"
                 android:layout_height="wrap_content"
-                android:background="@android:color/white" />
+                android:background="@android:color/white"
+                android:gravity="center" />
 
         </LinearLayout>
     </ScrollView>

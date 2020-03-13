@@ -53,6 +53,7 @@ public class BearingActivity extends Activity implements SensorEventListener {
 
     ImageView compassImg;
     ImageView bearingIndicator;
+    TextView locationTxt;
     TextView compassTxt;
     TextView bearingMarkText;
     TextView distanceMarkText;
@@ -72,8 +73,15 @@ public class BearingActivity extends Activity implements SensorEventListener {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SharedPreferences themePreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        if(themePreferences.getBoolean("Dark Mode", false)) {
+            setTheme(R.style.DarkTheme);
+        } else {
+            setTheme(R.style.AppTheme);
+        }
         setContentView(R.layout.bearing_activity);
 
+        locationTxt = findViewById(R.id.locationTxt);
         bearingIndicator = findViewById(R.id.bearingIndicator);
         bearingMarkText = findViewById(R.id.bearingMarker);
         distanceMarkText = findViewById(R.id.distanceMarker);
@@ -289,6 +297,7 @@ public class BearingActivity extends Activity implements SensorEventListener {
 
         //CODE FROM HERE USED FOR BEARING INDICATOR
         if(bearingIndicatorEnabled) {
+            locationTxt.setText("Lat: " + df2.format(latitude) + ". Long: " + df2.format(longitude));
             compassTxt.setText(mAzimuth + "°");
             bearingMarkText.setText("Bearing to target: " + bearing + "°");
             if(distanceUnit.equals("Nautical miles")){
@@ -299,6 +308,7 @@ public class BearingActivity extends Activity implements SensorEventListener {
                 distanceMarkText.setText("Distance to target: "  + df2.format(distance/1000) + "km");
             }
         } else {
+            locationTxt.setText("Lat: " + df2.format(latitude) + ". Long: " + df2.format(longitude));
             compassTxt.setText(mAzimuth + "°");
         }
     }

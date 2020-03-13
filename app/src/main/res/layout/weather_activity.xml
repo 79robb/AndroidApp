@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#1b1b1b">
+    android:background="?attr/colorPrimary">
 
     <LinearLayout
         android:layout_width="0dp"
@@ -35,35 +35,35 @@
                         android:layout_width="100dp"
                         android:layout_height="wrap_content"
                         android:text="Time"
-                        android:textColor="#FFFFFF" />
+                        android:textColor="?attr/colorPrimaryDark" />
 
                     <TextView
                         android:id="@+id/windLabel"
                         android:layout_width="100dp"
                         android:layout_height="wrap_content"
                         android:text="Wind Speed"
-                        android:textColor="#FFFFFF" />
+                        android:textColor="?attr/colorPrimaryDark" />
 
                     <TextView
                         android:id="@+id/directionLabel"
                         android:layout_width="120dp"
                         android:layout_height="wrap_content"
                         android:text="Wind Direction"
-                        android:textColor="#FFFFFF" />
+                        android:textColor="?attr/colorPrimaryDark" />
 
                     <TextView
                         android:id="@+id/precipitationLabel"
                         android:layout_width="160dp"
                         android:layout_height="wrap_content"
                         android:text="Precipitation"
-                        android:textColor="#FFFFFF" />
+                        android:textColor="?attr/colorPrimaryDark" />
 
                     <TextView
                         android:id="@+id/tempLabel"
                         android:layout_width="100dp"
                         android:layout_height="wrap_content"
                         android:text="Temperature"
-                        android:textColor="#FFFFFF" />
+                        android:textColor="?attr/colorPrimaryDark" />
                 </TableRow>
             </TableLayout>
         </HorizontalScrollView>
@@ -92,7 +92,8 @@
             android:id="@+id/weatherInfo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:text="TextView"
+            android:textColor="?attr/colorPrimaryDark" />
 
     </LinearLayout>
 

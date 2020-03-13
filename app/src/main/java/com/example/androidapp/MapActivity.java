@@ -2,6 +2,7 @@ package com.example.androidapp;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -9,11 +10,18 @@ import android.webkit.WebView;
 import android.widget.Button;
 
 import androidx.annotation.Nullable;
+import androidx.preference.PreferenceManager;
 
 public class MapActivity extends Activity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SharedPreferences themePreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        if(themePreferences.getBoolean("Dark Mode", false)) {
+            setTheme(R.style.DarkTheme);
+        } else {
+            setTheme(R.style.AppTheme);
+        }
         setContentView(R.layout.map_activity);
 
         Button homeNav = findViewById(R.id.homeButton);
