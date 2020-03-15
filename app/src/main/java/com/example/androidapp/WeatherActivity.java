@@ -38,6 +38,7 @@ public class WeatherActivity extends Activity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         themePreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        //Apply theme depending on settings
         if(themePreferences.getBoolean("Dark Mode", false)) {
             setTheme(R.style.DarkTheme);
         } else {
@@ -50,8 +51,9 @@ public class WeatherActivity extends Activity {
         StrictMode.setThreadPolicy(policy);
 
         TextView weatherInfo = findViewById(R.id.weatherInfo);
-        weatherInfo.setTextColor(Color.WHITE);
         weatherInfo.setText(R.string.weather_info);
+
+        //Navigation buttons
 
         Button homeNav = findViewById(R.id.homeButton);
         homeNav.setOnClickListener(new View.OnClickListener() {
@@ -95,6 +97,8 @@ public class WeatherActivity extends Activity {
 
         final TableLayout weatherTable = findViewById(R.id.weatherTable);
 
+        //Buttons for loading weather data
+
         Button load24 = findViewById(R.id.load24);
         load24.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,6 +123,8 @@ public class WeatherActivity extends Activity {
             }
         });
     }
+
+    //Method for accessing API. Takes a time frame and a gap between data
 
     private void createWeather(int time, int space){
         try {
@@ -157,6 +163,8 @@ public class WeatherActivity extends Activity {
                         TextView windDirText = new TextView(getApplicationContext());
                         TextView precipitationText = new TextView(getApplicationContext());
                         TextView tempText = new TextView(getApplicationContext());
+
+                        //Get unit info from settings
 
                         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
                         String tempUnit = preferences.getString("Temperature units", "Celsius");
@@ -203,6 +211,8 @@ public class WeatherActivity extends Activity {
                         );
 
                         dateText.setLayoutParams(lp);
+
+                        //Render text color depending on what preference is selected
 
                         if(themePreferences.getBoolean("Dark Mode", false)){
                             dateText.setTextColor(Color.WHITE);

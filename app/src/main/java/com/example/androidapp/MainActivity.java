@@ -32,6 +32,8 @@ public class MainActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
 
+        //Navigation buttons
+
         Button weatherNav = findViewById(R.id.weatherButton);
         weatherNav.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -42,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        final Button bearingNav = findViewById(R.id.bearingButton);
+        Button bearingNav = findViewById(R.id.bearingButton);
         bearingNav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -72,6 +74,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //Spinner which contains all locations
+
         final Spinner locationSpinner = findViewById(R.id.locationSpinnerID);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.mainLocations, android.R.layout.simple_spinner_item);
@@ -86,6 +90,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String locationChooser = locationSpinner.getSelectedItem().toString();
+
+                //switch case for different locations, displays an image and text depending on what it selected
 
                 switch (locationChooser){
                     case "Tobermory":
